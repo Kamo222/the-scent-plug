@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { StateContext } from './State/context';
 
 const Profile = () => {
+
+    const {user} = useContext(StateContext)
   return (
     <div id="login" className="row justify-content-center p-5">
         <div class="col-lg-10 bg-dark d-flex flex-column align-items-start p-5">
@@ -10,14 +13,14 @@ const Profile = () => {
             </div>
             <div className="d-flex flex-column align-items-start">
                 <h5>Details</h5>
-                <p>Name: Kamohelo Mamaregane</p>
-                <p>Email: kamohelo.mamaregane2@gmail.com</p>
-                <p>Phone Number: 0614648535</p>
+                <p>Name: {user.fullName}</p>
+                <p>Email: {user.email}</p>
+                <p>Phone Number: {user.phoneNumber}</p>
                 <h6>Address</h6>
-                <p>123 Poppy Street</p>
-                <p>Hampton</p>
-                <p>Johannesburg</p>
-                <p>5423</p>
+                <p>{user.houseNUmber} {user.streetName}</p>
+                <p>{user.suburb}</p>
+                <p>{user.city}</p>
+                <p>{user.postalCode}</p>
                 <h5>Orders</h5>
             </div>
 

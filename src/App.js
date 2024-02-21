@@ -8,17 +8,20 @@ import Login from './Components/Login';
 import { Link, Redirect, Navigate } from 'react-router-dom';
 import { Routes, Route, Switch } from 'react-router-dom';
 import { StateContext } from './Components/State/context';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Signup from './Components/Signup';
 import Onboarding from './Components/Onboarding';
 import Profile from './Components/Profile';
 import Admin from './Components/Admin';
+import ProductAdmin from './Components/ProductAdmin';
+import { getDocs, database, collection, getDoc } from './Components/firebase';
+import Cart from './Components/Cart';
 
 function App() {
 
   
 
-  const { setInitialState, setIsLoggedIn } = useContext(StateContext);
+  const { setInitialState, setIsLoggedIn, setProductInitialState, updateProducts, getProducts, reload, setCartInitialState, user, getBasket, setUserInitialState, cart, updateUser } = useContext(StateContext);
   const data = {
     user: {
       uid: "",
@@ -35,7 +38,7 @@ function App() {
     },
     products: [
       {
-        productId: "1",
+        id: "1",
         name: "Coco chanel",
         description: "This is a very cool perfume",
         image: "http://localhost:3000/static/media/perfume.f2225b8f9e3393a9ae6a.jpg",
@@ -46,7 +49,7 @@ function App() {
         price: 2000
       },
       {
-        productId: "2",
+        id: "2",
         name: "Lady Million",
         description: "This is a very cool perfume, cooler than the first one",
         image: "http://localhost:3000/static/media/perfume.f2225b8f9e3393a9ae6a.jpg",
@@ -59,6 +62,8 @@ function App() {
     ]
   }
 
+  
+
   useEffect(() => {
     if(window.localStorage.getItem('state')){
       setInitialState(JSON.parse(window.localStorage.getItem('state')))
@@ -69,9 +74,25 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if(localStorage.getItem("isLoggedInToSP")){
-      setIsLoggedIn(localStorage.getItem("isLoggedInToSP"));
+    if(window.localStorage.getItem("isLoggedInToSP")){
+      setIsLoggedIn(window.localStorage.getItem("isLoggedInToSP"));
     }
+  }, [])
+
+  useEffect(() => {
+    
+    getProducts()
+    .then((products) => {
+      updateProducts(products);
+    })
+    .catch((error) => alert(error))
+  }, [reload])
+
+  useEffect(() => {
+    console.log(user.uid)
+    getBasket(user.uid)
+    console.log("cart",cart)
+    
   }, [])
 
   return (
@@ -103,6 +124,8 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />}/>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/admin" element={<Admin />}/>
+        <Route path="/product-admin" element={<ProductAdmin />}/>
+        <Route path="/cart" element={<Cart />}/>
         {/* <Route path="/987987987" element={<Header />}/> */}
       </Routes>
       {/* <!-- ***** Header Area End ***** --> */}

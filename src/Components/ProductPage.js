@@ -28,7 +28,7 @@ const ProductPage = () => {
                 {/* <!-- ***** Featured Start ***** --> */}
                 {
                     products
-                    .filter((product) => product.productId === params.id)
+                    .filter((product) => product.id === params.id)
                     .map((product) => {
                         
                         return (

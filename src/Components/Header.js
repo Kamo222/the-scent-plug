@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from '../assets/images/scentpluglogo.png';
 import { Link ,NavLink, useNavigate } from 'react-router-dom';
 import { StateContext } from './State/context';
@@ -6,19 +6,26 @@ import { auth, signOut } from './firebase';
 
 const Header = () => {
 
-  const { user, setIsLoggedIn, isLoggedIn } = useContext(StateContext);
+  const { user, setIsLoggedIn, isLoggedIn, cart } = useContext(StateContext);
+  const { items } = cart;
   const navigate = useNavigate();
+  const [basketCounter, setBasketCounter ] = useState(items.reduce((accumilater) => accumilater + 1, 0))
 
   const logout = () => {
     signOut(auth)
     .then(() => {
       navigate("/home");
       setIsLoggedIn(false);
+      window.localStorage.setItem("isLoggedInToSP", false);
     })
     .catch((error) => {
       alert(error);
     })
   }
+
+  useEffect(() => {
+    setBasketCounter(items.reduce((accumilater) => accumilater + 1, 0));
+  }, [items])
 
   return (
     <>
@@ -60,11 +67,13 @@ const Header = () => {
                         </div>
 
                         
-                  
-                        <span id="basket-icon" class="material-symbols-outlined" >
-                          shopping_basket
-                        </span>
-                        <span id="basket-counter">{user.basket.reduce((accumilater) => accumilater + 1, 0)}</span>
+                        <NavLink className="d-flex" to={isLoggedIn ? "/cart" : "/login"}>
+                          <span id="basket-icon" class="material-symbols-outlined" >
+                            shopping_basket
+                          </span>
+                          <span id="basket-counter">{basketCounter}</span>
+                        </NavLink>
+                        
                         <a className='menu-trigger'>
                             <span>Menu</span>
                         </a>

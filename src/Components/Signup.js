@@ -1,17 +1,48 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRef } from 'react';
-import { createUserWithEmailAndPassword, auth } from './firebase';
+import { createUserWithEmailAndPassword, auth, addDoc, collection, database } from './firebase';
 import { StateContext } from "./State/context"
 
 const Signup = () => {
 
-    const { setIsLoggedIn } = useContext(StateContext);
+    const { setIsLoggedIn, getUser, setUserInitialState } = useContext(StateContext);
 
     const [email, setEmail]  = useState();
     const [password, setPassword] = useState();
     const [confirmedPassword, setConfirmedPassword] = useState();
     const navigate = useNavigate();
+
+    const newUser = async (uid, email) => {
+        const col = collection(database, "users");
+        const colBasket = collection(database, "baskets")
+
+        await addDoc(col, {
+            uid: uid,
+            fullName: "",
+            phoneNumber: null,
+            email: email,
+            houseNumber: null,
+            complexName: "",
+            streetName: "",
+            suburb: "",
+            city: "",
+            postalCode: null
+        }).then((res) => {
+            console.log("User created", res)
+        }).catch((error) => {
+            console.log(error);
+        })
+
+        await addDoc(colBasket, {
+            uid: uid,
+            items: []
+        }).then((res) => {
+            console.log("Basket created", res)
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     const signup = () => {
         if(password === confirmedPassword){
@@ -20,8 +51,11 @@ const Signup = () => {
                 console.log(userCredentials);
                 setIsLoggedIn(true);
                 localStorage.setItem("isLoggedInToSP", true);
-                localStorage.setItem("userCredentials", userCredentials);
+                
                 navigate("/onboarding");
+                newUser(userCredentials.user.uid, userCredentials.user.email);
+                setUserInitialState(getUser(userCredentials.user.uid));
+                localStorage.setItem("user", getUser(userCredentials.user.uid));
             })
             .catch((error) => {
                 alert(error);
@@ -29,6 +63,8 @@ const Signup = () => {
         } else {
             alert("passwords dont match")
         }
+
+
         
     }
 

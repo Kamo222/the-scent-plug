@@ -8,7 +8,7 @@ const Login = () => {
     const [email, setEmail]  = useState();
     const [password, setPassword] = useState();
 
-    const { setIsLoggedIn } = useContext(StateContext);
+    const { setIsLoggedIn, setUserInitialState, getUser } = useContext(StateContext);
     const navigate = useNavigate();
     
 
@@ -16,11 +16,11 @@ const Login = () => {
         
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
-            console.log(userCredentials);
             setIsLoggedIn(true);
             navigate("/home");
             localStorage.setItem("isLoggedInToSP", true);
-            localStorage.setItem("userCredentials", userCredentials);
+            
+            getUser(userCredentials.user.uid)
 
         })
         .catch((error) => {
