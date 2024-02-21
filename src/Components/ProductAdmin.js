@@ -19,7 +19,7 @@ const ProductAdmin = () => {
             price: newProductPrice,
             quantity: newProductQuantity,
             image: "http://localhost:3000/static/media/perfume.f2225b8f9e3393a9ae6a.jpg",
-            rating: 4,
+            rating: "4",
             instock: true,
             reviews: []
         })

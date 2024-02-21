@@ -135,6 +135,31 @@ const State = (props) => {
     })
   }
 
+  const saveCart = async (uid, cart) => {
+    // const fetchedBasket = await getDocs(collection(database, "baskets"));
+    // const basketResult = fetchedBasket.docs.map((doc) => doc.data()).filter((basket) => basket.uid === uid) 
+    // console.log("result", basketResult[0])
+    const basketQuery = query(collection(database, "baskets"), where("uid", "==", uid));
+    const fetchedBasket = await getDocs(basketQuery);
+    
+    const basketResult = fetchedBasket.docs.map((doc) => {
+      return doc.id;
+    })
+    console.log("cart", cart)
+    console.log("basket result", basketResult);
+    console.log(details)
+    const cartRef = doc(database, "baskets", basketResult[0]);
+    console.log("save cart",cart)
+    console.log("user id", uid)
+    setDoc(cartRef, cart)
+    .then((res) => {
+      console.log("Basket Saved")
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+  }
+
   const updateProducts = (fetchedProducts) => {
     productsDispatch({
       type: "UPDATE_PRODUCTS",
@@ -163,7 +188,8 @@ const State = (props) => {
       getBasket,
       updateUser,
       details,
-      setDetails
+      setDetails,
+      saveCart
     }}>
       {props.children}
     </StateContext.Provider>

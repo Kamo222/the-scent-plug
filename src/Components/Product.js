@@ -14,16 +14,26 @@ const Product = ({product}) => {
         
             <div className="item" id={id}>
                 <img className="min-vh-20" src={image} alt=""/>
-                <div className="d-flex justify-content-between">
-                    <div className="d-flex flex-column align-items-start">
-                        <h4 className="">{name}</h4>
-                        <button className="mt-3" onClick={(e) => { e.stopPropagation(); addToCart(product)}}>Add to Cart</button>
-                        <p>{quantity + " left"}</p>
+                <div className="d-flex flex-column  justify-content-between">
+
+                
+                    <span className="mt-2 product-name">{name}</span>
+                    <h3>{"R" + price}</h3>
+                
+            
+                    <button className="mt-2 button" onClick={(e) => { e.stopPropagation(); addToCart(product)}}>Add to Cart</button>
+                    {/* <p>{rating}</p> */}
+                    <p className="mt-2">{quantity + " left"}</p>
+
+                    {/* <div className="d-flex flex-column align-items-start">
+                        
+                        
+                        <p className="mt-2">{quantity + " left"}</p>
                     </div>
-                    <div className=" d-flex flex-column align-items-end mt-4">
-                        <p>{"R" + price}</p>
-                        <p>{rating}</p>
-                    </div>
+                    <div className=" d-flex flex-column align-items-end mt-2">
+                        
+                        
+                    </div> */}
                 </div>
             </div>
         

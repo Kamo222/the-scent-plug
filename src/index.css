@@ -1623,31 +1623,6 @@ Profile Style
   text-align: center;
 }
 
-/* My Styles */
-
-.row-height {
-  height: 120px;
-}
-
-#basket-icon {
-  color: #89CFF0;
-  margin-top: 7px;
-  margin-left: 20px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-#basket-counter {
-  color: #6CB4EE;
-  margin-left: 5px;
-  margin-top: 10px;
-}
-
-/* Login Styles */
-
-#login {
-  margin-top: 100px;
-}
 
 /* 
 ---------------------------------------------
@@ -1750,4 +1725,80 @@ body {
   .gaming-library .item ul li {
     width: 16%;
   }
+}
+
+
+/* My Styles */
+
+.row-height {
+  height: 120px;
+}
+
+#basket-icon {
+  color: #89CFF0;
+  margin-top: 7px;
+  margin-left: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#basket-counter {
+  color: #6CB4EE;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+
+/* Login Styles */
+
+#login {
+  margin-top: 100px;
+}
+
+.col-height {
+  height: 300px;
+}
+
+.scroll {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.order-height {
+  display: flex;
+  height: 100px;
+  background-color: #89CFF0;
+  width: 700px;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.button {
+  border-radius: 20px;
+  border: none;
+  color: white;
+  background-color: #89CFF0;
+}
+
+.product-name {
+  font-size: 30px;
+}
+
+.display-height {
+  height: 150px
+}
+
+.blue-background {
+  background-color: #89CFF0;
+}
+
+.product-radius {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }

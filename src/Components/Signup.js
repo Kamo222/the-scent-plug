@@ -49,7 +49,6 @@ const Signup = () => {
             createUserWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 console.log(userCredentials);
-                setIsLoggedIn(true);
                 localStorage.setItem("isLoggedInToSP", true);
                 
                 navigate("/onboarding");

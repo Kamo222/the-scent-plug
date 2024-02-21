@@ -21,7 +21,7 @@ function App() {
 
   
 
-  const { setInitialState, setIsLoggedIn, setProductInitialState, updateProducts, getProducts, reload, setCartInitialState, user, getBasket, setUserInitialState, cart, updateUser } = useContext(StateContext);
+  const { setInitialState, setIsLoggedIn, setProductInitialState, updateProducts, getProducts, reload, setCartInitialState, user, getBasket, setUserInitialState, cart, updateUser, getUser } = useContext(StateContext);
   const data = {
     user: {
       uid: "",
@@ -73,10 +73,20 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    if(window.localStorage.getItem("isLoggedInToSP")){
-      setIsLoggedIn(window.localStorage.getItem("isLoggedInToSP"));
+  const parseToBoolean = (input) => {
+    if(input === "true"){
+      return true
+    } else if(input === "false"){
+      return false
+    } else {
+      return false
     }
+  }
+
+  useEffect(() => {
+    
+      setIsLoggedIn(parseToBoolean(window.localStorage.getItem("isLoggedInToSP")));
+      console.log("is logged in", window.localStorage.getItem("isLoggedInToSP") === "false")
   }, [])
 
   useEffect(() => {
@@ -93,6 +103,10 @@ function App() {
     getBasket(user.uid)
     console.log("cart",cart)
     
+  }, [])
+
+  useEffect(() => {
+    getUser(user.uid);
   }, [])
 
   return (
